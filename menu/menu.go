@@ -71,6 +71,5 @@ func PceTypeMenu() (int, int, int) {
 	}
 
 	fmt.Printf("You choose PCE cluster type %d: %s\n", i+1, pceVirtualSpec[i].Description)
-
 	return i, pceVirtualSpec[i].CpuPerNode, pceVirtualSpec[i].RamPerNode
 }

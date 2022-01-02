@@ -38,6 +38,5 @@ func NodeTypeMenu() int {
 	}
 
 	fmt.Printf("You choose node type %d: %s\n", i+1, nodeType[i].Type)
-
 	return i
 }
