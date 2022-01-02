@@ -42,6 +42,7 @@ func PceTypeMenu() (int, int, int) {
 		Active:   "→ {{ .Description | green }}",
 		Inactive: "   {{ .Description | faint }}",
 		Selected: "\U0001F44D {{ .Description | red | cyan }}",
+		Help:     "Use the arrow keys to navigate: ↓ ↑",
 		Details: `
 
 --- PCE Spec on VM -------------------------------------------------------------------

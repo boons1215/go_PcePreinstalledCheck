@@ -22,6 +22,7 @@ func NodeTypeMenu() int {
 		Label:    "Select Node Type:",
 		Active:   "→ {{ .Type | green }}",
 		Inactive: "   {{ .Type | faint }}",
+		Help:     "Use the arrow keys to navigate: ↓ ↑",
 		Selected: "\U0001F44D {{ .Type | red | cyan }}"}
 
 	prompt := promptui.Select{
