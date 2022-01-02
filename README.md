@@ -5,4 +5,4 @@ A tool that checks the required packages have installed or kernel settings have 
 
 ## Installation
 No installation required. 
-Download the release and transfer to the node, then execute it.
+Download the release then traexecute it on the node.
