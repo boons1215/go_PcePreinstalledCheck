@@ -6,3 +6,5 @@ A tool that checks the required packages have installed or kernel settings have 
 ## Installation
 No installation required. 
 Download the release then traexecute it on the node.
+
+![alt text](https://github.com/boons1215/go_PcePreinstalledCheck/blob/main/demo.gif "Demo")
