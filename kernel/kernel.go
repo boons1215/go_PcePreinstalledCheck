@@ -93,7 +93,7 @@ func onlyDataAndSnc() {
 	fmt.Println(string(colorCyan), l1, string(colorReset), l2, string(colorCyan), l3, string(colorReset))
 
 	settings := []string{
-		"fs.file-max = 2000000", "kernel.shmax = 60000000", "vm.overcommit_memory = 1",
+		"fs.file-max = 2000000", "kernel.shmmax = 60000000", "vm.overcommit_memory = 1",
 	}
 
 	filePath := "/etc/sysctl.d/99-illumio.conf"

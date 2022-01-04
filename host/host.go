@@ -40,7 +40,7 @@ func HostCheck(cpuNeeded, ramNeeded int) {
 	req = "7.4 above | 8.3 above"
 	output, _ = exec.Command("bash", "-c", "cat /etc/redhat-release | rev | cut -d'(' -f 2 | rev | awk 'NF>1{print $NF}'").Output()
 	parse := strings.TrimSuffix(string(output), "\n")
-	f, _ := strconv.ParseFloat(parse, 32)
+	f, _ := strconv.ParseFloat(parse[0:3], 32)
 
 	if f < 7.4 {
 		set = false
