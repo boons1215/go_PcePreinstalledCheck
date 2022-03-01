@@ -69,12 +69,13 @@ func HostCheck(cpuNeeded, ramNeeded int) {
 	commandOutput("Number of CPUs", output, req, &list, set)
 
 	// ram check
+	set = true
 	req = strconv.Itoa(ramNeeded)
 	output, _ = exec.Command("bash", "-c", "awk '$1 == \"MemTotal:\" { print $2 / 1000 / 1000 }' /proc/meminfo").Output()
 	parse = strings.TrimSuffix(string(output), "\n")
-	i, _ = strconv.Atoi(parse)
+	j, _ := strconv.ParseFloat(parse, 64)
 
-	if i < ramNeeded {
+	if j < float64(ramNeeded) {
 		set = false
 	}
 	commandOutput("RAM per Node (GB)", output, req, &list, set)
