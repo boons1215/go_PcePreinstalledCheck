@@ -2,6 +2,7 @@ package kernel
 
 import (
 	"fmt"
+	"os"
 	"os/exec"
 	"strings"
 
@@ -32,6 +33,7 @@ func Execute(clusterType, nodeType int) {
 	}
 	if clusterType == 0 || nodeType == 1 {
 		onlyDataAndSnc()
+		pceOptimization()
 	}
 }
 
@@ -93,12 +95,72 @@ func onlyDataAndSnc() {
 	fmt.Println(string(colorCyan), l1, string(colorReset), l2, string(colorCyan), l3, string(colorReset))
 
 	settings := []string{
-		"fs.file-max = 2000000", "kernel.shmmax = 60000000", "vm.overcommit_memory = 1",
+		"fs.file-max = 2000000", "vm.overcommit_memory = 1",
 	}
 
 	filePath := "/etc/sysctl.d/99-illumio.conf"
 	output := grepFiles(settings, filePath)
 	createTable(output)
+}
+
+func pceOptimization() {
+	l1 := "\n\nThe following kernel settings are required for Data Nodes and SNC only:\n"
+	l2 := "Disable the use of THP(Transparent Huge Pages) at kernel level for all data nodes and SNC"
+	l3 := "\n * /sys/kernel/mm/transparent_hugepage/enabled"
+
+	fmt.Println(string(colorCyan), l1, string(colorReset), l2, string(colorCyan), l3, string(colorReset))
+
+	settings := "always madvise [never]"
+	filePath := "/sys/kernel/mm/transparent_hugepage/enabled"
+	output := catFiles(settings, filePath)
+	createTable(output)
+
+	file := "disable-thp"
+	filePath = "/etc/init.d/"
+	output = listFiles(file, filePath)
+	createTable(output)
+}
+
+func listFiles(file string, path string) []checkResult {
+	list := make([]checkResult, 0)
+
+	v := formatString(file)
+	_, err := os.Stat(path + v)
+
+	commandOutput := strings.TrimSuffix(string(file), "\n")
+	configured := true
+
+	if os.IsNotExist(err) {
+		commandOutput = "NIL"
+		configured = false
+	}
+
+	list = append(list, checkResult{
+		Filename: path, Name: file, Value: commandOutput, Configured: configured,
+	})
+
+	return list
+}
+
+func catFiles(setting string, path string) []checkResult {
+	list := make([]checkResult, 0)
+
+	v := formatString(setting)
+	output, _ := exec.Command("/usr/bin/cat", v, path).Output()
+
+	commandOutput := strings.TrimSuffix(string(output), "\n")
+	configured := true
+
+	if setting != commandOutput {
+		commandOutput = "NIL"
+		configured = false
+	}
+
+	list = append(list, checkResult{
+		Filename: path, Name: setting, Value: commandOutput, Configured: configured,
+	})
+
+	return list
 }
 
 func grepFiles(settings []string, path string) []checkResult {

@@ -32,7 +32,7 @@ func rpmPkgCheck() {
 	packages := []string{
 		"bash", "bzip2", "chkconfig", "coreutils", "findutils", "curl", "gawk", "grep",
 		"initscripts", "gzip", "logrotate", "net-tools", "procps-ng", "sed", "shadow-utils",
-		"tar", "util-linux", "zlib", "ntp", "bind-utils", "libnfnetlink", "glibc", "ncurses",
+		"tar", "util-linux", "zlib", "bind-utils", "libnfnetlink", "glibc", "ncurses",
 	}
 
 	rpmList := multiThreadRpmCheck(packages)
